@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+:root {
+  --erp-primary: #0D00B6;
+  --erp-white: #ffffff;
+  --erp-black: #282828;
+  --erp-danger: #d10000;
+  --erp-primary-hover: #3a2ee1;
+}
+
+.btn-primary {
+  padding: 10px 50px;
+  text-transform: uppercase;
+  border: 2px solid var(--erp-primary);
+  background-color: var(--erp-primary);
+  color: var(--erp-white);
+  border-radius: 50px;
+}
+.btn-primary:hover {
+  background-color: var(--erp-primary-hover);
+}
+
+.btn-secondary {
+  padding: 10px 50px;
+  text-transform: uppercase;
+  border: 2px solid var(--erp-primary);
+  background-color: var(--erp-white);
+  color: var(--erp-primary);
+  border-radius: 50px;
+}
+.btn-secondary:hover {
+  background-color: var(--erp-primary-hover);
+  color: var(--erp-white);
+}
+
+.btn-primary-sm {
+  padding: 4px 20px;
+  text-transform: uppercase;
+  border: 2px solid var(--erp-primary);
+  background-color: var(--erp-primary);
+  color: var(--erp-white);
+  border-radius: 50px;
+}
+.btn-primary-sm:hover {
+  background-color: var(--erp-primary-hover);
+}
+
+.btn-secondary-sm {
+  padding: 5px 20px;
+  text-transform: uppercase;
+  border: 2px solid var(--erp-primary);
+  background-color: var(--erp-white);
+  color: var(--erp-primary);
+  border-radius: 50px;
+}
+.btn-secondary-sm:hover {
+  background-color: var(--erp-primary-hover);
+  color: var(--erp-white);
+}
+
+.btn-secondary-danger-sm {
+  padding: 4px 20px;
+  text-transform: uppercase;
+  border: 2px solid var(--erp-danger);
+  background-color: var(--erp-white);
+  color: var(--erp-danger);
+  border-radius: 50px;
+}
+.btn-secondary-danger-sm:hover {
+  background-color: var(--erp-danger);
+  color: var(--erp-white);
+}/*# sourceMappingURL=input.css.map */

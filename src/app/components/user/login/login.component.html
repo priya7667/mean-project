@@ -1,0 +1,40 @@
+<div class="flex place-items-center h-[100vh]">
+    <div class="md:flex max-w-[1000px] w-full mx-auto shadow-lg rounded-md">
+        <div class="bg-blue-800 w-full md:w-[400px] p-6">
+            <h1 class="text-white font-bold text-3xl mb-3">ERP System</h1>
+            <span class="text-xl text-white">Make it Simple</span>
+        </div>
+        <div class="w-full p-8 md:py-28 bg-gray-100">
+            <h2 class="text-5xl mb-16">Login</h2>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div class="mb-5">
+                    <label for="email" class="block mb-2 text-gray-600">Email*</label>
+                    <input type="email" id="email" formControlName="email" class="border h-[45px] w-full rounded px-3"
+                        placeholder="Please enter your email">
+                    <div *ngIf="loginForm.get('email')?.invalid && loginForm.get('email')?.touched"
+                        class="text-red-600">
+                        Email is required and must be a valid email address.
+                    </div>
+                </div>
+                <div class="mb-5">
+                    <label for="password" class="block mb-2 text-gray-600">Password*</label>
+                    <input type="password" id="password" formControlName="password"
+                        class="border h-[45px] w-full rounded px-3" placeholder="Please enter your password">
+                    <div *ngIf="loginForm.get('password')?.invalid && loginForm.get('password')?.touched"
+                        class="text-red-600">
+                        Password is required and must be at least 6 characters long.
+                    </div>
+                </div>
+                <div class="text-right mt-3">
+                    <a routerLink="/forgot-password" class="text-gray-400">Forgot password?</a>
+                </div>
+                <div class="mt-5">
+                    <button type="submit"
+                        class="uppercase bg-blue-800 rounded-full block text-white py-3 text-xl text-center">
+                        Sign in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

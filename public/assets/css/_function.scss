@@ -1,0 +1,72 @@
+@mixin button {}
+
+.btn-primary {
+    padding: 10px 50px;
+    text-transform: uppercase;
+    border: 2px solid var(--erp-primary);
+    background-color: var(--erp-primary);
+    color: var(--erp-white);
+    border-radius: 50px;
+
+    &:hover {
+        background-color: var(--erp-primary-hover);
+    }
+}
+
+.btn-secondary {
+    padding: 10px 50px;
+    text-transform: uppercase;
+    border: 2px solid var(--erp-primary);
+    background-color: var(--erp-white);
+    color: var(--erp-primary);
+    border-radius: 50px;
+
+    &:hover {
+        background-color: var(--erp-primary-hover);
+        color: var(--erp-white);
+    }
+
+}
+
+.btn-primary-sm {
+    padding: 4px 20px;
+    text-transform: uppercase;
+    border: 2px solid var(--erp-primary);
+    background-color: var(--erp-primary);
+    color: var(--erp-white);
+    border-radius: 50px;
+
+    &:hover {
+        background-color: var(--erp-primary-hover);
+    }
+}
+
+.btn-secondary-sm {
+    padding: 5px 20px;
+    text-transform: uppercase;
+    border: 2px solid var(--erp-primary);
+    background-color: var(--erp-white);
+    color: var(--erp-primary);
+    border-radius: 50px;
+
+    &:hover {
+        background-color: var(--erp-primary-hover);
+        color: var(--erp-white);
+    }
+
+}
+
+.btn-secondary-danger-sm {
+    padding: 4px 20px;
+    text-transform: uppercase;
+    border: 2px solid var(--erp-danger);
+    background-color: var(--erp-white);
+    color: var(--erp-danger);
+    border-radius: 50px;
+
+    &:hover {
+        background-color: var(--erp-danger);
+        color: var(--erp-white);
+    }
+
+}

@@ -1,0 +1,30 @@
+@media print {
+    /* Hide unwanted elements */
+    .sidebar,
+    .header,
+    .btn-primary-sm,
+    .btn-secondary-sm,
+    .btn-secondary-danger-sm,
+    .bi-printer,
+    .bi-trash,
+    .bi-x-lg,
+    .bi-pencil,
+    .flex.justify-end{
+      display: none !important;
+    }
+  
+    /* Make sure the lead details section takes full width */
+    .lead-details-container {
+      width: 100% !important;
+      margin: 0 !important;
+      padding: 0 !important;
+    }
+  
+    /* Adjust the print layout */
+    body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+    }
+  }
+  

@@ -1,0 +1,47 @@
+<div class="form-container relative p-6">
+    <h2 class="text-5xl mb-5">New Lead</h2>
+    <form [formGroup]="leadsForm" (ngSubmit)="onSubmit()" class="space-y-5">
+      <fieldset class="border p-6 rounded-lg">
+        <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div>
+            <label for="name" class="block mb-2 font-medium text-gray-500">Name</label>
+            <input id="name" type="text" formControlName="name" class="border py-2 px-3 w-full rounded-md">
+          </div>
+          <div>
+            <label for="for" class="block mb-2 font-medium text-gray-500">For</label>
+            <input id="for" type="text" formControlName="for" class="border py-2 px-3 w-full rounded-md">
+          </div>
+          <div>
+            <label for="formGroup" class="block mb-2 font-medium text-gray-500">Form Group</label>
+            <input id="formGroup" type="text" formControlName="formGroup" class="border py-2 px-3 w-full rounded-md">
+          </div>
+        </div>
+      </fieldset>
+      <div class="fixed bottom-0 left-0 w-full bg-white p-4 shadow-md">
+        <div class="flex justify-end gap-4">
+          <!-- <button type="button" (click)="onCancel()" class="btn-secondary">CANCEL</button> -->
+          <button type="submit" class="btn-primary">SAVE</button>
+        </div>
+      </div>
+    </form>
+    <div class="mt-8">
+      <table class="min-w-full bg-white">
+        <thead class="bg-gray-800 text-white">
+          <tr>
+            <th class="w-1/3 py-3 px-4 uppercase font-semibold text-sm">Name</th>
+            <th class="w-1/3 py-3 px-4 uppercase font-semibold text-sm">For</th>
+            <th class="w-1/3 py-3 px-4 uppercase font-semibold text-sm">Form Group</th>
+          </tr>
+        </thead>
+        <tbody class="text-gray-700">
+          <tr *ngFor="let lead of leadsData">
+            <td class="w-1/3 py-3 px-4">{{ lead.name }}</td>
+            <td class="w-1/3 py-3 px-4">{{ lead.for }}</td>
+            <td class="w-1/3 py-3 px-4">{{ lead.formGroup }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  

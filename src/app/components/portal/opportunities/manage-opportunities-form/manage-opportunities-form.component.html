@@ -1,0 +1,426 @@
+<div class="form-container relative p-6">
+    <h2 class="text-5xl mb-5">{{ isEditMode ? 'Update' : 'New' }} Opportunity</h2>
+    <form [formGroup]="opportunityForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+        <!-- Basic Information Section -->
+        <fieldset class="border p-6 rounded-lg">
+            <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+            <!-- Owner -->
+            <div class="mb-5">
+                <label for="owner" class="block mb-2 font-medium text-gray-500">Owner</label>
+                <input id="owner" type="text" formControlName="owner"
+                    class="border py-2 px-3 w-full rounded-md bg-gray-200" readonly>
+                    <div *ngIf="opportunityForm.get('owner')?.touched && opportunityForm.get('owner')?.invalid"
+                    class="text-red-600 text-sm">
+                    Owner is required.
+                </div>
+            </div>
+            
+            <div formGroupName="basicInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Opportunity Name -->
+                <div>
+                    <label for="opportunityName" class="block mb-2 font-medium text-gray-500">Opportunity Name</label>
+                    <input id="opportunityName" type="text" formControlName="opportunityName"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.opportunityName')?.touched && (opportunityForm.get('basicInformation.opportunityName')?.dirty || opportunityForm.get('basicInformation.opportunityName')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.opportunityName')?.errors?.['required']">Opportunity Name is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.opportunityName')?.errors?.['minlength']">Opportunity Name must be at least 3 characters long.</small>
+                    </div>
+                </div>
+
+                <!-- Account -->
+                <div>
+                    <label for="account" class="block mb-2 font-medium text-gray-500">Account</label>
+                    <input id="account" type="text" formControlName="account"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.account')?.touched && (opportunityForm.get('basicInformation.account')?.dirty || opportunityForm.get('basicInformation.account')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.account')?.errors?.['required']">Account is required.</small>
+                    </div>
+                </div>
+
+                <!-- Category -->
+                <div>
+                    <label for="category" class="block mb-2 font-medium text-gray-500">Category</label>
+                    <select id="category" formControlName="category" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let category of formSettings['category']" [value]="category">{{category}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('basicInformation.category')?.touched && (opportunityForm.get('basicInformation.category')?.dirty || opportunityForm.get('basicInformation.category')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.category')?.errors?.['required']">Category is required.</small>
+                    </div>
+                </div>
+
+                <!-- Contact -->
+                <div>
+                    <label for="contact" class="block mb-2 font-medium text-gray-500">Contact</label>
+                    <input id="contact" type="text" formControlName="contact"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.contact')?.touched && (opportunityForm.get('basicInformation.contact')?.dirty || opportunityForm.get('basicInformation.contact')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.contact')?.errors?.['required']">Contact is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.contact')?.errors?.['minlength']">Contact must be at least 10 characters long.</small>
+                    </div>
+                </div>
+
+                <!-- Amount -->
+                <div>
+                    <label for="amount" class="block mb-2 font-medium text-gray-500">Amount (RM)</label>
+                    <input id="amount" type="text" formControlName="amount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.amount')?.touched && (opportunityForm.get('basicInformation.amount')?.dirty || opportunityForm.get('basicInformation.amount')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.amount')?.errors?.['required']">Amount is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.amount')?.errors?.['pattern']">Please enter a valid amount.</small>
+                    </div>
+                </div>
+
+                <!-- Close Date -->
+                <div>
+                    <label for="closeDate" class="block mb-2 font-medium text-gray-500">Close Date</label>
+                    <input id="closeDate" type="date" formControlName="closeDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.closeDate')?.touched && (opportunityForm.get('basicInformation.closeDate')?.dirty || opportunityForm.get('basicInformation.closeDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.closeDate')?.errors?.['required']">Close Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Stage -->
+                <div>
+                    <label for="stage" class="block mb-2 font-medium text-gray-500">Stage</label>
+                    <select id="stage" formControlName="stage" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let stage of formSettings['stage']" [value]="stage">{{stage}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('basicInformation.stage')?.touched && (opportunityForm.get('basicInformation.stage')?.dirty || opportunityForm.get('basicInformation.stage')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.stage')?.errors?.['required']">Stage is required.</small>
+                    </div>
+                </div>
+
+                <!-- Probability -->
+                <div>
+                    <label for="probability" class="block mb-2 font-medium text-gray-500">Probability (%)</label>
+                    <input id="probability" type="text" formControlName="probability"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.probability')?.touched && (opportunityForm.get('basicInformation.probability')?.dirty || opportunityForm.get('basicInformation.probability')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.probability')?.errors?.['required']">Probability is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.probability')?.errors?.['pattern']">Please enter a valid probability (0-100).</small>
+                    </div>
+                </div>
+
+                <!-- Submit Date Internal -->
+                <div>
+                    <label for="submitDateInternal" class="block mb-2 font-medium text-gray-500">Submit Date (Internal)</label>
+                    <input id="submitDateInternal" type="date" formControlName="submitDateInternal"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.submitDateInternal')?.touched && (opportunityForm.get('basicInformation.submitDateInternal')?.dirty || opportunityForm.get('basicInformation.submitDateInternal')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.submitDateInternal')?.errors?.['required']">Submit Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Submission Amount -->
+                <div>
+                    <label for="submissionAmount" class="block mb-2 font-medium text-gray-500">Submission Amount</label>
+                    <input id="submissionAmount" type="text" formControlName="submissionAmount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.submissionAmount')?.touched && (opportunityForm.get('basicInformation.submissionAmount')?.dirty || opportunityForm.get('basicInformation.submissionAmount')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.submissionAmount')?.errors?.['required']">Submission Amount is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.submissionAmount')?.errors?.['pattern']">Please enter a valid amount.</small>
+                    </div>
+                </div>
+
+                <!-- Submission Date HQ -->
+                <div>
+                    <label for="submissionDateHQ" class="block mb-2 font-medium text-gray-500">Submission Date (HQ)</label>
+                    <input id="submissionDateHQ" type="date" formControlName="submissionDateHQ"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.submissionDateHQ')?.touched && (opportunityForm.get('basicInformation.submissionDateHQ')?.dirty || opportunityForm.get('basicInformation.submissionDateHQ')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.submissionDateHQ')?.errors?.['required']">Submission Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Disbursement Amount -->
+                <div>
+                    <label for="disbursementAmount" class="block mb-2 font-medium text-gray-500">Disbursement Amount</label>
+                    <input id="disbursementAmount" type="text" formControlName="disbursementAmount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.disbursementAmount')?.touched && (opportunityForm.get('basicInformation.disbursementAmount')?.dirty || opportunityForm.get('basicInformation.disbursementAmount')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.disbursementAmount')?.errors?.['required']">Disbursement Amount is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.disbursementAmount')?.errors?.['pattern']">Please enter a valid amount.</small>
+                    </div>
+                </div>
+
+                <!-- Disbursement Date HQ -->
+                <div>
+                    <label for="disbursementDateHQ" class="block mb-2 font-medium text-gray-500">Disbursement Date (HQ)</label>
+                    <input id="disbursementDateHQ" type="date" formControlName="disbursementDateHQ"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.disbursementDateHQ')?.touched && (opportunityForm.get('basicInformation.disbursementDateHQ')?.dirty || opportunityForm.get('basicInformation.disbursementDateHQ')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.disbursementDateHQ')?.errors?.['required']">Disbursement Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Company Type -->
+                <div>
+                    <label for="companyType" class="block mb-2 font-medium text-gray-500">Company Type</label>
+                    <select id="companyType" formControlName="companyType" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['companyType']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('basicInformation.companyType')?.touched && (opportunityForm.get('basicInformation.companyType')?.dirty || opportunityForm.get('basicInformation.companyType')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.companyType')?.errors?.['required']">Company Type is required.</small>
+                    </div>
+                </div>
+
+                <!-- Pos Back Date -->
+                <div>
+                    <label for="posBackDate" class="block mb-2 font-medium text-gray-500">Pos Back Date</label>
+                    <input id="posBackDate" type="date" formControlName="posBackDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.posBackDate')?.touched && (opportunityForm.get('basicInformation.posBackDate')?.dirty || opportunityForm.get('basicInformation.posBackDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.posBackDate')?.errors?.['required']">Pos Back Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Date Application Cancelled -->
+                <div>
+                    <label for="dateApplicationCancelled" class="block mb-2 font-medium text-gray-500">Date Application Cancelled</label>
+                    <input id="dateApplicationCancelled" type="date" formControlName="dateApplicationCancelled"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.dateApplicationCancelled')?.touched && (opportunityForm.get('basicInformation.dateApplicationCancelled')?.dirty || opportunityForm.get('basicInformation.dateApplicationCancelled')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.dateApplicationCancelled')?.errors?.['required']">Date Application Cancelled is required.</small>
+                    </div>
+                </div>
+
+                <!-- Approval Date -->
+                <div>
+                    <label for="approvalDate" class="block mb-2 font-medium text-gray-500">Approval Date</label>
+                    <input id="approvalDate" type="date" formControlName="approvalDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.approvalDate')?.touched && (opportunityForm.get('basicInformation.approvalDate')?.dirty || opportunityForm.get('basicInformation.approvalDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.approvalDate')?.errors?.['required']">Approval Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Admin Remarks -->
+                <div class="col-span-3">
+                    <label for="adminRemarks" class="block mb-2 font-medium text-gray-500">Admin Remarks</label>
+                    <textarea id="adminRemarks" formControlName="adminRemarks"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="opportunityForm.get('basicInformation.adminRemarks')?.touched && (opportunityForm.get('basicInformation.adminRemarks')?.dirty || opportunityForm.get('basicInformation.adminRemarks')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.adminRemarks')?.errors?.['required']">Admin Remarks are required.</small>
+                    </div>
+                </div>
+
+                <!-- Comm Rcvd Date -->
+                <div>
+                    <label for="commRcvdDate" class="block mb-2 font-medium text-gray-500">Comm Rcvd Date</label>
+                    <input id="commRcvdDate" type="date" formControlName="commRcvdDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.commRcvdDate')?.touched && (opportunityForm.get('basicInformation.commRcvdDate')?.dirty || opportunityForm.get('basicInformation.commRcvdDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.commRcvdDate')?.errors?.['required']">Comm Rcvd Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- NRIC -->
+                <div>
+                    <label for="nric" class="block mb-2 font-medium text-gray-500">NRIC</label>
+                    <input id="nric" type="text" formControlName="nric"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.nric')?.touched && (opportunityForm.get('basicInformation.nric')?.dirty || opportunityForm.get('basicInformation.nric')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.nric')?.errors?.['required']">NRIC is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.nric')?.errors?.['pattern']">NRIC must be 12 digits.</small>
+                    </div>
+                </div>
+
+                <!-- Comm Pay Date -->
+                <div>
+                    <label for="commPayDate" class="block mb-2 font-medium text-gray-500">Comm Pay Date</label>
+                    <input id="commPayDate" type="date" formControlName="commPayDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.commPayDate')?.touched && (opportunityForm.get('basicInformation.commPayDate')?.dirty || opportunityForm.get('basicInformation.commPayDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.commPayDate')?.errors?.['required']">Comm Pay Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Type of Loan -->
+                <div>
+                    <label for="typeOfLoan" class="block mb-2 font-medium text-gray-500">Type of Loan</label>
+                    <select id="typeOfLoan" formControlName="typeOfLoan" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['typeOfLoan']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('basicInformation.typeOfLoan')?.touched && (opportunityForm.get('basicInformation.typeOfLoan')?.dirty || opportunityForm.get('basicInformation.typeOfLoan')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.typeOfLoan')?.errors?.['required']">Type of Loan is required.</small>
+                    </div>
+                </div>
+
+                <!-- Chewque No -->
+                <div>
+                    <label for="chewqueNo" class="block mb-2 font-medium text-gray-500">Chewque No</label>
+                    <input id="chewqueNo" type="text" formControlName="chewqueNo"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('basicInformation.chewqueNo')?.touched && (opportunityForm.get('basicInformation.chewqueNo')?.dirty || opportunityForm.get('basicInformation.chewqueNo')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.chewqueNo')?.errors?.['required']">Chewque No is required.</small>
+                    </div>
+                </div>
+
+                <!-- Finance Remarks -->
+                <div class="col-span-3">
+                    <label for="financeRemarks" class="block mb-2 font-medium text-gray-500">Finance Remarks</label>
+                    <textarea id="financeRemarks" formControlName="financeRemarks"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="opportunityForm.get('basicInformation.financeRemarks')?.touched && (opportunityForm.get('basicInformation.financeRemarks')?.dirty || opportunityForm.get('basicInformation.financeRemarks')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('basicInformation.financeRemarks')?.errors?.['required']">Finance Remarks are required.</small>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Additional Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Additional Information</legend>
+            <div formGroupName="additionalInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                
+                <!-- Lead Source -->
+                <div>
+                    <label for="leadSource" class="block mb-2 font-medium text-gray-500">Lead Source</label>
+                    <select id="leadSource" formControlName="leadSource" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let source of formSettings['leadSource']" [value]="source">{{source}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('additionalInformation.leadSource')?.touched && (opportunityForm.get('additionalInformation.leadSource')?.dirty || opportunityForm.get('additionalInformation.leadSource')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('additionalInformation.leadSource')?.errors?.['required']">Lead Source is required.</small>
+                    </div>
+                </div>
+
+                <!-- Next Step -->
+                <div>
+                    <label for="nextStep" class="block mb-2 font-medium text-gray-500">Next Step</label>
+                    <input id="nextStep" type="text" formControlName="nextStep"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('additionalInformation.nextStep')?.touched && (opportunityForm.get('additionalInformation.nextStep')?.dirty || opportunityForm.get('additionalInformation.nextStep')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('additionalInformation.nextStep')?.errors?.['required']">Next Step is required.</small>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Description Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Description Information</legend>
+            <div formGroupName="descriptionInformation">
+                <label for="description" class="block mb-2 font-medium text-gray-500">Description</label>
+                <textarea id="description" formControlName="description"
+                    class="border py-2 px-3 w-full rounded-md"></textarea>
+                <div *ngIf="opportunityForm.get('descriptionInformation.description')?.touched && (opportunityForm.get('descriptionInformation.description')?.dirty || opportunityForm.get('descriptionInformation.description')?.touched)"
+                     class="text-red-600">
+                    <small *ngIf="opportunityForm.get('descriptionInformation.description')?.errors?.['required']">Description is required.</small>
+                    <small *ngIf="opportunityForm.get('descriptionInformation.description')?.errors?.['minlength']">Description must be at least 10 characters long.</small>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Custom Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14 mb-10">
+            <legend class="text-3xl px-0 inline-block w-auto">Custom Information</legend>
+            <div formGroupName="customInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                
+                <!-- Pos Out Date -->
+                <div>
+                    <label for="posOutDate" class="block mb-2 font-medium text-gray-500">Pos Out Date</label>
+                    <input id="posOutDate" type="date" formControlName="posOutDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('customInformation.posOutDate')?.touched && (opportunityForm.get('customInformation.posOutDate')?.dirty || opportunityForm.get('customInformation.posOutDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.posOutDate')?.errors?.['required']">Pos Out Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Payslip Type -->
+                <div>
+                    <label for="payslipType" class="block mb-2 font-medium text-gray-500">Payslip Type</label>
+                    <select id="payslipType" formControlName="payslipType" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['payslipType']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="opportunityForm.get('customInformation.payslipType')?.touched && (opportunityForm.get('customInformation.payslipType')?.dirty || opportunityForm.get('customInformation.payslipType')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.payslipType')?.errors?.['required']">Payslip Type is required.</small>
+                    </div>
+                </div>
+
+                <!-- Pos Out Loan Amount -->
+                <div>
+                    <label for="posOutLoanAmount" class="block mb-2 font-medium text-gray-500">Pos Out Loan Amount</label>
+                    <input id="posOutLoanAmount" type="text" formControlName="posOutLoanAmount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('customInformation.posOutLoanAmount')?.touched && (opportunityForm.get('customInformation.posOutLoanAmount')?.dirty || opportunityForm.get('customInformation.posOutLoanAmount')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.posOutLoanAmount')?.errors?.['required']">Pos Out Loan Amount is required.</small>
+                        <small *ngIf="opportunityForm.get('customInformation.posOutLoanAmount')?.errors?.['pattern']">Please enter a valid amount.</small>
+                    </div>
+                </div>
+
+                <!-- Contact Number -->
+                <div>
+                    <label for="contactNumber" class="block mb-2 font-medium text-gray-500">No Telephone Dihubungi</label>
+                    <input id="contactNumber" type="text" formControlName="contactNumber"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('customInformation.contactNumber')?.touched && (opportunityForm.get('customInformation.contactNumber')?.dirty || opportunityForm.get('customInformation.contactNumber')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.contactNumber')?.errors?.['required']">Contact Number is required.</small>
+                        <small *ngIf="opportunityForm.get('customInformation.contactNumber')?.errors?.['pattern']">Please enter a valid contact number (10-15 digits).</small>
+                    </div>
+                </div>
+
+                <!-- Pos Tracking Info -->
+                <div>
+                    <label for="posTrackingInfo" class="block mb-2 font-medium text-gray-500">Pos Tracking No/ Email/ Fax</label>
+                    <input id="posTrackingInfo" type="text" formControlName="posTrackingInfo"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('customInformation.posTrackingInfo')?.touched && (opportunityForm.get('customInformation.posTrackingInfo')?.dirty || opportunityForm.get('customInformation.posTrackingInfo')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.posTrackingInfo')?.errors?.['required']">Pos Tracking Info is required.</small>
+                    </div>
+                </div>
+
+                <!-- Inquiry Date -->
+                <div>
+                    <label for="inquiryDate" class="block mb-2 font-medium text-gray-500">Inquiry Date</label>
+                    <input id="inquiryDate" type="date" formControlName="inquiryDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="opportunityForm.get('customInformation.inquiryDate')?.touched && (opportunityForm.get('customInformation.inquiryDate')?.dirty || opportunityForm.get('customInformation.inquiryDate')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="opportunityForm.get('customInformation.inquiryDate')?.errors?.['required']">Inquiry Date is required.</small>
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="bottom-0 left-0 w-full bg-white p-4 shadow-md">
+            <div class="flex justify-end gap-4">
+                <button type="button" (click)="onCancel()" class="btn-secondary">CANCEL</button>
+                <button type="submit" class="btn-primary">{{ isEditMode ? 'UPDATE' : 'SAVE' }}</button>
+            </div>
+        </div>
+    </form>
+</div>

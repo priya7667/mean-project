@@ -1,0 +1,61 @@
+<div class="flex bg-[#0D00B6]">
+    <div class="w-[400px]">
+        <div class="py-16 w-full h-[100vh] sticky top-0 flex flex-col justify-between sidebar">
+            <div class="sidebar">
+                <div class="logo-area flex gap-4 items-center px-8">
+                    <div class="w-[80px] h-[80px] rounded-full border-2 bg-blue-600"></div>
+                    <div class="text-white">
+                        <h4 class="font-medium text-2xl">ERP System</h4>
+                        {{loggedUserData?.name}} ({{loggedUserData?.role}})
+                    </div>
+                </div>
+                <div class="pl-8 mt-7">
+                    <ul>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('dashboard'), 'bg-white': isActive('dashboard'), 'text-[var(--erp-primary)]': isActive('dashboard')}">
+                            <a routerLink="dashboard" class="flex gap-3">
+                                <i class="bi bi-speedometer2"></i> Dashboard
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('leads'), 'bg-white': isActive('leads'), 'text-[var(--erp-primary)]': isActive('leads')}">
+                            <a routerLink="leads" class="flex gap-3">
+                                <i class="bi bi-people-fill"></i> Leads
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('opportunities'), 'bg-white': isActive('opportunities'), 'text-[var(--erp-primary)]': isActive('opportunities')}">
+                            <a routerLink="opportunities" class="flex gap-3">
+                                <i class="bi bi-lightbulb"></i> Opportunities
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('accounts'), 'bg-white': isActive('accounts'), 'text-[var(--erp-primary)]': isActive('accounts')}">
+                            <a routerLink="accounts" class="flex gap-3">
+                                <i class="bi bi-wallet2"></i> Accounts
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('report-list'), 'bg-white': isActive('report-list'), 'text-[var(--erp-primary)]': isActive('report-list')}">
+                            <a routerLink="report-list" class="flex gap-3">
+                                <i class="bi bi-journals"></i> Report
+                            </a>
+                        </li>
+                        <li routerLinkActive="active" class="p-4 text-lg rounded-l-full" [ngClass]="{'text-white': !isActive('settings'), 'bg-white': isActive('settings'), 'text-[var(--erp-primary)]': isActive('settings')}">
+                            <a routerLink="settings" class="flex gap-3">
+                                <i class="bi bi-journals"></i> Settings
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="px-10">
+                <a href="" class="text-lg text-white border-t flex gap-3 py-3">
+                    <i class="bi bi-box-arrow-in-right"></i> Logout
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white rounded-l-3xl w-full px-12 py-5">
+        <div class="flex justify-end gap-6 items-center border-b pb-3 mb-5">
+            <a href="" class="text-3xl"><i class="bi bi-bell"></i></a>
+            <div class="w-[50px] h-[50px] bg-gray-400 rounded-full"></div>
+        </div>
+        <router-outlet></router-outlet>
+    </div>
+</div>

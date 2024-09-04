@@ -1,0 +1,67 @@
+<div class="flex justify-between items-center mb-4">
+    <h2 class="text-5xl">Opportunities List</h2>
+    <div class="flex items-center gap-3">
+        <form class="max-w-md mx-auto" (submit)="onSearch($event)">
+            <div class="relative">
+                <input type="search" id="default-search" (input)="onSearch($event)"
+                    class="block w-full px-4 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50"
+                    placeholder="Search Items..." required />
+            </div>
+        </form>
+        <div class="flex items-center gap-2">
+            Export As
+            <a href="#" (click)="exportAs('spreadsheet')" class="text-green-600 text-4xl"><i class="bi bi-file-earmark-spreadsheet"></i></a>
+            <a href="#" (click)="exportAs('pdf')" class="text-red-600 text-4xl"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+        </div>
+        <a routerLink="../add-new" class="bg-blue-800 px-8 text-white py-2 rounded-full">ADD <i class="bi bi-plus"></i></a>
+    </div>
+</div>
+
+<div class="relative overflow-x-auto border rounded-md">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 border-b uppercase bg-gray-100">
+            <tr>
+                <th scope="col" class="px-4 py-3">SL #</th>
+                <th>owner</th>
+                <th scope="col" class="px-4 py-3">Opportunity Name</th>
+                <th scope="col" class="px-4 py-3">Account</th>
+                <th scope="col" class="px-4 py-3">Category</th>
+                <th scope="col" class="px-4 py-3">Contact</th>
+                <th scope="col" class="px-4 py-3">Amount</th>
+                <th scope="col" class="px-4 py-3">Close Date</th>
+                <th scope="col" class="px-4 py-3">Stage</th>
+            </tr>
+        </thead>
+        <tbody>
+              <tr *ngFor="let itm of filteredItems; let i = index" class="bg-white border-b">
+                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
+                <td class="px-4 py-3"><a [routerLink]="['/portal/opportunities/view', itm._id]" class="text-blue-600"> {{itm.owner}}</a></td>
+                <td class="px-4 py-3">{{ itm.basicInformation.opportunityName }}</td>
+                <td class="px-4 py-3">{{ itm.basicInformation.account}}</td>
+                <td class="px-4 py-3">{{ itm.basicInformation.category }}</td>
+                <td class="px-4 py-3">aa</td>
+            
+                <td class="px-4 py-3">{{ itm.basicInformation.amount}}</td>
+                <td class="px-4 py-3">{{ itm.basicInformation.closeDate | date:'yyyy-MM-dd' }}</td>
+                <td class="px-4 py-3 text-end">{{ itm.basicInformation.stage}}</td> 
+              </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="flex justify-between items-center mt-4">
+    <div>
+        Items per page:
+        <select (change)="onItemsPerPageChange($event)" class="border rounded p-1">
+            <option *ngFor="let option of [10, 20, 50, 100]" [value]="option">{{ option }}</option>
+        </select>
+    </div>
+    <div class="pagination">
+        <button (click)="previousPage()" class="px-2 py-1 border rounded" [disabled]="currentPage === 1">Previous</button>
+        <ng-container *ngFor="let page of pageNumbers">
+            <button *ngIf="page !== -1" (click)="goToPage(page)" class="px-2 py-1 border rounded" [class.active]="page === currentPage">{{ page }}</button>
+            <span *ngIf="page === -1">...</span>
+        </ng-container>
+        <button (click)="nextPage()" class="px-2 py-1 border rounded" [disabled]="currentPage === getTotalPages()">Next</button>
+    </div>
+</div>

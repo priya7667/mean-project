@@ -1,0 +1,68 @@
+<div class="flex justify-between items-center mb-4">
+    <h2 class="text-5xl">Leads List</h2>
+    <div class="flex items-center gap-3">
+        <form class="max-w-md mx-auto" (submit)="onSearch($event)">
+            <div class="relative">
+                <input type="search" id="default-search" (input)="onSearch($event)"
+                    class="block w-full px-4 py-3 ps-10 text-sm text-gray-900 border border-gray-300 rounded-full bg-gray-50"
+                    placeholder="Search Leads..." required />
+            </div>
+        </form>
+        <div class="flex items-center gap-2">
+            Export As
+            <a href="#" (click)="exportAs('spreadsheet')" class="text-green-600 text-4xl"><i class="bi bi-file-earmark-spreadsheet"></i></a>
+            <a href="#" (click)="exportAs('pdf')" class="text-red-600 text-4xl"><i class="bi bi-file-earmark-pdf-fill"></i></a>
+        </div>
+        <a routerLink="../add-new" class="bg-blue-800 px-8 text-white py-2 rounded-full">ADD <i class="bi bi-plus"></i></a>
+    </div>
+</div>
+
+<div class="relative overflow-x-auto border rounded-md">
+    <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+        <thead class="text-xs text-gray-700 border-b uppercase bg-gray-100">
+            <tr>
+                <th scope="col" class="px-4 py-3">SL #</th>
+                <th scope="col" class="px-4 py-3">Owner</th>
+                <th scope="col" class="px-4 py-3">Last Name</th>
+                <th scope="col" class="px-4 py-3">NRIC</th>
+                <th scope="col" class="px-4 py-3">Type of Loan</th>
+                <th scope="col" class="px-4 py-3">Lead Source</th>
+                <th scope="col" class="px-4 py-3">Lead Status</th>
+                <th scope="col" class="px-4 py-3">No Telephone Dihubungi</th>
+                <th scope="col" class="px-4 py-3">Pos Out Date</th>
+                <th scope="col" class="px-4 py-3">Pos Out Loan Amount</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let lead of filteredLeads; let i = index" class="bg-white border-b">
+                <th scope="row" class="px-4 py-3 font-medium text-gray-900 whitespace-nowrap">{{ (currentPage - 1) * itemsPerPage + i + 1 }}</th>
+                <td class="px-4 py-3"><a [routerLink]="['/portal/leads/view', lead._id]" class="text-blue-600"> (M-T2) {{ getOwnerName(lead) }}</a></td>
+                <td class="px-4 py-3">{{ lead.basicInformation.lastName }}</td>
+                <td class="px-4 py-3">{{ lead.basicInformation.nric }}</td>
+                <td class="px-4 py-3">{{ lead.customInformation.typeOfLoan }}</td>
+                <td class="px-4 py-3">{{ lead.basicInformation.leadSource }}</td>
+                <td class="px-4 py-3">{{ lead.basicInformation.leadStatus }}</td>
+                <td class="px-4 py-3">{{ lead.basicInformation.contactNumber }}</td>
+                <td class="px-4 py-3">{{ lead.customInformation.posOutDate | date:'yyyy-MM-dd' }}</td>
+                <td class="px-4 py-3 text-end">{{ lead.customInformation.loanAmount }}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<div class="flex justify-between items-center mt-4">
+    <div>
+        Items per page:
+        <select (change)="onItemsPerPageChange($event)" class="border rounded p-1">
+            <option *ngFor="let option of [10, 20, 50, 100]" [value]="option">{{ option }}</option>
+        </select>
+    </div>
+    <div class="pagination">
+        <button (click)="previousPage()" class="px-2 py-1 border rounded" [disabled]="currentPage === 1">Previous</button>
+        <ng-container *ngFor="let page of pageNumbers">
+            <button *ngIf="page !== -1" (click)="goToPage(page)" class="px-2 py-1 border rounded" [class.active]="page === currentPage">{{ page }}</button>
+            <span *ngIf="page === -1">...</span>
+        </ng-container>
+        <button (click)="nextPage()" class="px-2 py-1 border rounded" [disabled]="currentPage === getTotalPages()">Next</button>
+    </div>
+</div>

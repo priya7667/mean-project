@@ -1,0 +1,113 @@
+<div class="form-container relative p-6">
+  <form [formGroup]="dropDownForm" (ngSubmit)="onSubmit()" class="space-y-5">
+    <fieldset class="border p-6 rounded-lg">
+      <legend class="text-3xl px-0 inline-block w-auto">Form Settings</legend>
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <div>
+          <label for="setting_key" class="block mb-2 font-medium text-gray-500">Setting Key</label>
+          <select id="setting_key" formControlName="setting_key" class="border py-2 px-3 w-full rounded-md">
+            <option *ngFor="let key of settingKeys" [value]="key">{{key}}</option>
+          </select>
+          <div *ngIf="dropDownForm.get('setting_key')?.touched && dropDownForm.get('setting_key')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Setting Key is required.
+          </div>
+        </div>
+        <div>
+          <label for="module_name" class="block mb-2 font-medium text-gray-500">Module Name</label>
+          <select id="module_name" formControlName="module_name" class="border py-2 px-3 w-full rounded-md">
+            <option *ngFor="let module of modules" [value]="module">{{module}}</option>
+          </select>
+          <div *ngIf="dropDownForm.get('module_name')?.touched && dropDownForm.get('module_name')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Module Name is required.
+          </div>
+        </div>
+        <div>
+          <label for="form_name" class="block mb-2 font-medium text-gray-500">Form Name</label>
+          <select id="form_name" formControlName="form_name" class="border py-2 px-3 w-full rounded-md">
+            <option *ngFor="let form of forms" [value]="form">{{form}}</option>
+          </select>
+          <div *ngIf="dropDownForm.get('form_name')?.touched && dropDownForm.get('form_name')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Form Name is required.
+          </div>
+        </div>
+        <div>
+          <label for="field_name" class="block mb-2 font-medium text-gray-500">Field Name</label>
+          <select id="field_name" formControlName="field_name" class="border py-2 px-3 w-full rounded-md">
+            <option *ngFor="let field of fields" [value]="field.key">{{field.label}}</option>
+          </select>
+          <div *ngIf="dropDownForm.get('field_name')?.touched && dropDownForm.get('field_name')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Field Name is required.
+          </div>
+        </div>
+        <div>
+          <label for="value" class="block mb-2 font-medium text-gray-500">Value</label>
+          <input id="value" type="text" formControlName="value" class="border py-2 px-3 w-full rounded-md"
+            placeholder="Enter value">
+          <div *ngIf="dropDownForm.get('value')?.touched && dropDownForm.get('value')?.invalid"
+            class="text-red-500 text-sm mt-1">
+            Value is required.
+          </div>
+        </div>
+      </div>
+    </fieldset>
+    <div class="bottom-0 left-0 w-full bg-white p-4 shadow-md">
+      <div class="flex justify-end gap-4">
+        <button type="submit" class="btn-primary">SAVE</button>
+        <button type="button" class="btn-secondary" (click)="resetForm()">CANCEL</button>
+      </div>
+    </div>
+  </form>
+
+
+  <!-- Display fetched form settings -->
+  <div class="mt-8">
+    <h3 class="text-xl font-semibold">Saved Form Settings</h3>
+    <table class="min-w-full bg-white mt-4 border-collapse border border-gray-300">
+      <thead class="bg-gray-800 text-white">
+        <tr>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Setting Key</th>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Module Name</th>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Form Name</th>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Field Name</th>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Value</th>
+          <th class="w-1/5 py-3 px-4 uppercase font-semibold text-sm">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="text-gray-700">
+        <tr *ngFor="let setting of formSettings">
+          <td class="w-1/5 py-3 px-4">{{ setting.setting_key }}</td>
+          <td class="w-1/5 py-3 px-4">{{ setting.module_name }}</td>
+          <td class="w-1/5 py-3 px-4">{{ setting.form_name }}</td>
+          <td class="w-1/5 py-3 px-4">{{ setting.field_name }}</td>
+          <td class="w-1/5 py-3 px-4">{{ setting.value }}</td>
+          <td class="w-1/5 py-3 px-4">
+            <div class="flex space-x-2">
+              <button (click)="onEdit(setting)"
+                class="flex items-center justify-center bg-blue-500 hover:bg-blue-600 text-white rounded p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M15 12H9m4 8H7a2 2 0 01-2-2V6a2 2 0 012-2h10a2 2 0 012 2v8a2 2 0 01-2 2h-4" />
+                </svg>
+                <span class="ml-1">Edit</span>
+              </button>
+              <button (click)="onDelete(setting._id)"
+                class="flex items-center justify-center bg-red-500 hover:bg-red-600 text-white rounded p-1">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                  stroke="currentColor">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span class="ml-1">Delete</span>
+              </button>
+            </div>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

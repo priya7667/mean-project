@@ -1,0 +1,510 @@
+<div class="form-container relative p-6">
+    <h2 class="text-5xl mb-5">{{ isEditMode ? 'Update' : 'New' }} Lead</h2>
+    <form [formGroup]="leadForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+        <!-- Basic Information Section -->
+        <fieldset class="border p-6 rounded-lg">
+            <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+            <!-- Owner -->
+            <div class="mb-5">
+                <label for="owner" class="block mb-2 font-medium text-gray-500">Owner</label>
+                <input id="owner" type="text" formControlName="owner"
+                    class="border py-2 px-3 w-full rounded-md bg-gray-200" readonly>
+                <div *ngIf="leadForm.get('owner')?.touched && leadForm.get('owner')?.invalid"
+                    class="text-red-600 text-sm">
+                    Owner is required.
+                </div>
+            </div>
+            <div formGroupName="basicInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Last Name -->
+                <div>
+                    <label for="lastName" class="block mb-2 font-medium text-gray-500">Last Name</label>
+                    <input id="lastName" type="text" formControlName="lastName"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.lastName')?.touched && leadForm.get('basicInformation.lastName')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.lastName')?.errors?.['required']">Last Name is
+                            required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.lastName')?.errors?.['minlength']">Last Name must be
+                            at least 2 characters long.</div>
+                        <div *ngIf="leadForm.get('basicInformation.lastName')?.errors?.['maxlength']">Last Name cannot
+                            be more than 50 characters long.</div>
+                    </div>
+                </div>
+                <!-- Lead Status -->
+                <div>
+                    <label for="leadStatus" class="block mb-2 font-medium text-gray-500">Lead Status</label>
+                    <select id="leadStatus" formControlName="leadStatus" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let status of formSettings['leadStatus']" [value]="status">{{status}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.leadStatus')?.touched && leadForm.get('basicInformation.leadStatus')?.invalid"
+                        class="text-red-600 text-sm">
+                        Lead Status is required.
+                    </div>
+                </div>
+                <!-- First Name -->
+                <div>
+                    <label for="firstName" class="block mb-2 font-medium text-gray-500">First Name</label>
+                    <input id="firstName" type="text" formControlName="firstName"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.firstName')?.touched && leadForm.get('basicInformation.firstName')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.firstName')?.errors?.['required']">First Name is
+                            required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.firstName')?.errors?.['minlength']">First Name must
+                            be at least 2 characters long.</div>
+                        <div *ngIf="leadForm.get('basicInformation.firstName')?.errors?.['maxlength']">First Name cannot
+                            be more than 50 characters long.</div>
+                    </div>
+                </div>
+                <!-- Attitude -->
+                <div>
+                    <label for="attitude" class="block mb-2 font-medium text-gray-500">Attitude</label>
+                    <select id="attitude" formControlName="attitude" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let attitude of formSettings['attitude']" [value]="attitude">{{attitude}}
+                        </option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.attitude')?.touched && leadForm.get('basicInformation.attitude')?.invalid"
+                        class="text-red-600 text-sm">
+                        Attitude is required.
+                    </div>
+                </div>
+                <!-- Job Title -->
+                <div>
+                    <label for="jobTitle" class="block mb-2 font-medium text-gray-500">Job Title</label>
+                    <input id="jobTitle" type="text" formControlName="jobTitle"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.jobTitle')?.touched && leadForm.get('basicInformation.jobTitle')?.invalid"
+                        class="text-red-600 text-sm">
+                        Job Title is required.
+                    </div>
+                </div>
+                <!-- Lead Source -->
+                <div>
+                    <label for="leadSource" class="block mb-2 font-medium text-gray-500">Lead Source</label>
+                    <select id="leadSource" formControlName="leadSource" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let source of formSettings['leadSource']" [value]="source">{{source}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.leadSource')?.touched && leadForm.get('basicInformation.leadSource')?.invalid"
+                        class="text-red-600 text-sm">
+                        Lead Source is required.
+                    </div>
+                </div>
+                <!-- Company Name -->
+                <div>
+                    <label for="companyName" class="block mb-2 font-medium text-gray-500">Company Name</label>
+                    <input id="companyName" type="text" formControlName="companyName"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.companyName')?.touched && leadForm.get('basicInformation.companyName')?.invalid"
+                        class="text-red-600 text-sm">
+                        Company Name is required.
+                    </div>
+                </div>
+                <!-- Industry -->
+                <div>
+                    <label for="industry" class="block mb-2 font-medium text-gray-500">Industry</label>
+                    <select id="industry" formControlName="industry" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let source of formSettings['industry']" [value]="source">{{source}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.industry')?.touched && leadForm.get('basicInformation.industry')?.invalid"
+                        class="text-red-600 text-sm">
+                        Industry is required.
+                    </div>
+                </div>
+                <!-- Mobile No -->
+                <div>
+                    <label for="mobileNo" class="block mb-2 font-medium text-gray-500">Mobile No</label>
+                    <div class="flex items-center gap-3">
+                        <div>
+                            <select class="border py-2 px-3 rounded-md">
+                                <option value="+91">+60</option>
+                            </select>
+                        </div>
+                        <div class="w-full">
+                            <input id="mobileNo" type="text" formControlName="mobileNo"
+                                class="border py-2 px-3 w-full rounded-md">
+                        </div>
+                    </div>
+                    <div *ngIf="leadForm.get('basicInformation.mobileNo')?.touched && leadForm.get('basicInformation.mobileNo')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.mobileNo')?.errors?.['required']">Mobile Number is
+                            required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.mobileNo')?.errors?.['pattern']">Please enter a valid
+                            10-digit mobile number.</div>
+                    </div>
+                </div>
+                <!-- Date of Birth -->
+                <div>
+                    <label for="dateOfBirth" class="block mb-2 font-medium text-gray-500">Date of Birth</label>
+                    <input id="dateOfBirth" type="date" formControlName="dateOfBirth"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.dateOfBirth')?.touched && leadForm.get('basicInformation.dateOfBirth')?.invalid"
+                        class="text-red-600 text-sm">
+                        Date of Birth is required.
+                    </div>
+                </div>
+                <!-- Second Mobile No -->
+                <div>
+                    <label for="secondMobileNo" class="block mb-2 font-medium text-gray-500">Second Mobile No</label>
+                    <div class="flex items-center gap-3">
+                        <div>
+                            <select class="border py-2 px-3 rounded-md">
+                                <option value="+91">+60</option>
+                            </select>
+                        </div>
+                        <div class="w-full">
+                            <input id="secondMobileNo" type="text" formControlName="secondMobileNo"
+                                class="border py-2 px-3 w-full rounded-md">
+                        </div>
+                    </div>
+                    <div *ngIf="leadForm.get('basicInformation.secondMobileNo')?.touched && leadForm.get('basicInformation.secondMobileNo')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.secondMobileNo')?.errors?.['required']">Second Mobile
+                            Number is required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.secondMobileNo')?.errors?.['pattern']">Please enter a
+                            valid 10-digit mobile number.</div>
+                    </div>
+                </div>
+                <!-- Work Phone No -->
+                <div>
+                    <label for="workPhoneNo" class="block mb-2 font-medium text-gray-500">Work Phone No</label>
+                    <div class="flex items-center gap-3">
+                        <div>
+                            <select class="border py-2 px-3 rounded-md">
+                                <option value="+91">+60</option>
+                            </select>
+                        </div>
+                        <div class="w-full">
+                            <input id="workPhoneNo" type="text" formControlName="workPhoneNo"
+                                class="border py-2 px-3 w-full rounded-md">
+                        </div>
+                    </div>
+                    <div *ngIf="leadForm.get('basicInformation.workPhoneNo')?.touched && leadForm.get('basicInformation.workPhoneNo')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.workPhoneNo')?.errors?.['required']">Work Phone
+                            Number is required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.workPhoneNo')?.errors?.['pattern']">Please enter a
+                            valid 10-digit phone number.</div>
+                    </div>
+                </div>
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block mb-2 font-medium text-gray-500">Email</label>
+                    <input id="email" type="text" formControlName="email" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.email')?.touched && leadForm.get('basicInformation.email')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.email')?.errors?.['required']">Email is required.
+                        </div>
+                        <div *ngIf="leadForm.get('basicInformation.email')?.errors?.['email']">Please enter a valid
+                            email address.</div>
+                    </div>
+                </div>
+                <!-- Work FAX -->
+                <div>
+                    <label for="workFax" class="block mb-2 font-medium text-gray-500">Work FAX</label>
+                    <input id="workFax" type="text" formControlName="workFax"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.workFax')?.touched && leadForm.get('basicInformation.workFax')?.invalid"
+                        class="text-red-600 text-sm">
+                        Work FAX is required.
+                    </div>
+                </div>
+                <!-- Second Email -->
+                <div>
+                    <label for="secondEmail" class="block mb-2 font-medium text-gray-500">Second Email</label>
+                    <input id="secondEmail" type="text" formControlName="secondEmail"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.secondEmail')?.touched && leadForm.get('basicInformation.secondEmail')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.secondEmail')?.errors?.['required']">Second Email is
+                            required.</div>
+                        <div *ngIf="leadForm.get('basicInformation.secondEmail')?.errors?.['email']">Please enter a
+                            valid email address.</div>
+                    </div>
+                </div>
+                <!-- Website -->
+                <div>
+                    <label for="website" class="block mb-2 font-medium text-gray-500">Website</label>
+                    <input id="website" type="text" formControlName="website"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.website')?.touched && leadForm.get('basicInformation.website')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('basicInformation.website')?.errors?.['required']">Website is required.
+                        </div>
+                        <div *ngIf="leadForm.get('basicInformation.website')?.errors?.['pattern']">Please enter a valid
+                            website URL.</div>
+                    </div>
+                </div>
+                <!-- NRIC -->
+                <div>
+                    <label for="nric" class="block mb-2 font-medium text-gray-500">NRIC</label>
+                    <input id="nric" type="text" formControlName="nric" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.nric')?.touched && leadForm.get('basicInformation.nric')?.invalid"
+                        class="text-red-600 text-sm">
+                        NRIC is required.
+                    </div>
+                </div>
+                <!-- Reason -->
+                <div>
+                    <label for="reason" class="block mb-2 font-medium text-gray-500">Reason - Tidak Berminat</label>
+                    <input id="reason" type="text" formControlName="reason" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.reason')?.touched && leadForm.get('basicInformation.reason')?.invalid"
+                        class="text-red-600 text-sm">
+                        Reason is required.
+                    </div>
+                </div>
+                <!-- Telesales Remarks -->
+                <div class="md:col-span-2 lg:col-span-3">
+                    <label for="telesalesRemarks" class="block mb-2 font-medium text-gray-500">Telesales Remarks</label>
+                    <textarea id="telesalesRemarks" formControlName="telesalesRemarks"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="leadForm.get('basicInformation.telesalesRemarks')?.touched && leadForm.get('basicInformation.telesalesRemarks')?.invalid"
+                        class="text-red-600 text-sm">
+                        Telesales Remarks are required.
+                    </div>
+                </div>
+                <!-- Payslip Type -->
+                <div>
+                    <label for="payslipType" class="block mb-2 font-medium text-gray-500">Payslip Type</label>
+                    <select id="payslipType" formControlName="payslipType" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['payslipType']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.payslipType')?.touched && leadForm.get('basicInformation.payslipType')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payslip Type is required.
+                    </div>
+                </div>
+                <!-- Follow Up -->
+                <div>
+                    <label for="followUp" class="block mb-2 font-medium text-gray-500">Berapa Kali Follow Up?</label>
+                    <select id="followUp" formControlName="followUp" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let count of formSettings['followUp']" [value]="count">{{count}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('basicInformation.followUp')?.touched && leadForm.get('basicInformation.followUp')?.invalid"
+                        class="text-red-600 text-sm">
+                        Follow Up is required.
+                    </div>
+                </div>
+                <!-- Contact Number -->
+                <div>
+                    <label for="contactNumber" class="block mb-2 font-medium text-gray-500">No Telephone
+                        Dihubungi</label>
+                    <input id="contactNumber" type="text" formControlName="contactNumber"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.contactNumber')?.touched && leadForm.get('basicInformation.contactNumber')?.invalid"
+                        class="text-red-600 text-sm">
+                        Contact Number is required.
+                    </div>
+                </div>
+                <!-- Inquiry Date -->
+                <div>
+                    <label for="inquiryDate" class="block mb-2 font-medium text-gray-500">Inquiry Date</label>
+                    <input id="inquiryDate" type="date" formControlName="inquiryDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('basicInformation.inquiryDate')?.touched && leadForm.get('basicInformation.inquiryDate')?.invalid"
+                        class="text-red-600 text-sm">
+                        Inquiry Date is required.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Additional Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Additional Information</legend>
+            <div formGroupName="additionalInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Country -->
+                <div>
+                    <label for="country" class="block mb-2 font-medium text-gray-500">Country</label>
+                    <select id="country" formControlName="country" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.country')?.touched && leadForm.get('additionalInformation.country')?.invalid"
+                        class="text-red-600 text-sm">
+                        Country is required.
+                    </div>
+                </div>
+                <!-- State -->
+                <div>
+                    <label for="state" class="block mb-2 font-medium text-gray-500">State/Province</label>
+                    <select id="state" formControlName="state" class="border py-2 px-3 w-full rounded-md">
+                        <option value="">--Please Select--</option>
+                        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.state')?.touched && leadForm.get('additionalInformation.state')?.invalid"
+                        class="text-red-600 text-sm">
+                        State/Province is required.
+                    </div>
+                </div>
+                <!-- City -->
+                <div>
+                    <label for="city" class="block mb-2 font-medium text-gray-500">City</label>
+                    <select id="city" formControlName="city" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.city')?.touched && leadForm.get('additionalInformation.city')?.invalid"
+                        class="text-red-600 text-sm">
+                        City is required.
+                    </div>
+                </div>
+                <!-- Zip/Postal Code -->
+                <div>
+                    <label for="zip" class="block mb-2 font-medium text-gray-500">Zip/Postal Code</label>
+                    <input id="zip" type="text" formControlName="zip" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('additionalInformation.zip')?.touched && leadForm.get('additionalInformation.zip')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('additionalInformation.zip')?.errors?.['required']">Zip/Postal Code is
+                            required.</div>
+                        <div *ngIf="leadForm.get('additionalInformation.zip')?.errors?.['pattern']">Please enter a valid
+                            5-digit postal code.</div>
+                    </div>
+                </div>
+                <!-- Street -->
+                <div class="md:col-span-2 lg:col-span-3">
+                    <label for="street" class="block mb-2 font-medium text-gray-500">Street</label>
+                    <textarea id="street" formControlName="street"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="leadForm.get('additionalInformation.street')?.touched && leadForm.get('additionalInformation.street')?.invalid"
+                        class="text-red-600 text-sm">
+                        Street is required.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Description Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Description Information</legend>
+            <div formGroupName="descriptionInformation">
+                <label for="description" class="block mb-2 font-medium text-gray-500">Description</label>
+                <textarea id="description" formControlName="description"
+                    class="border py-2 px-3 w-full rounded-md"></textarea>
+                <div *ngIf="leadForm.get('descriptionInformation.description')?.touched && leadForm.get('descriptionInformation.description')?.invalid"
+                    class="text-red-600 text-sm">
+                    Description is required and must be at least 10 characters long.
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Custom Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14 mb-10">
+            <legend class="text-3xl px-0 inline-block w-auto">Custom Information</legend>
+            <div formGroupName="customInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Type Of Loan -->
+                <div>
+                    <label for="typeOfLoan" class="block mb-2 font-medium text-gray-500">Type Of Loan</label>
+                    <select id="typeOfLoan" formControlName="typeOfLoan" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['typeOfLoan']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('customInformation.typeOfLoan')?.touched && leadForm.get('customInformation.typeOfLoan')?.invalid"
+                        class="text-red-600 text-sm">
+                        Type Of Loan is required.
+                    </div>
+                </div>
+                <!-- Payslip Month -->
+                <div>
+                    <label for="payslipMonth" class="block mb-2 font-medium text-gray-500">Payslip Month</label>
+                    <select id="payslipMonth" formControlName="payslipMonth" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let month of months" [value]="month">{{month}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('customInformation.payslipMonth')?.touched && leadForm.get('customInformation.payslipMonth')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payslip Month is required.
+                    </div>
+                </div>
+                <!-- Pos Out Date -->
+                <div>
+                    <label for="posOutDate" class="block mb-2 font-medium text-gray-500">Pos Out Date</label>
+                    <input id="posOutDate" type="date" formControlName="posOutDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.posOutDate')?.touched && leadForm.get('customInformation.posOutDate')?.invalid"
+                        class="text-red-600 text-sm">
+                        Pos Out Date is required.
+                    </div>
+                </div>
+                <!-- Gross Salary -->
+                <div>
+                    <label for="grossSalary" class="block mb-2 font-medium text-gray-500">Gaji Kasar</label>
+                    <input id="grossSalary" type="text" formControlName="grossSalary"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.grossSalary')?.touched && leadForm.get('customInformation.grossSalary')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('customInformation.grossSalary')?.errors?.['required']">Gross Salary is
+                            required.</div>
+                        <div *ngIf="leadForm.get('customInformation.grossSalary')?.errors?.['pattern']">Please enter a
+                            valid amount.</div>
+                    </div>
+                </div>
+                <!-- Loan Amount -->
+                <div>
+                    <label for="loanAmount" class="block mb-2 font-medium text-gray-500">Pos Out Loan Amount</label>
+                    <input id="loanAmount" type="text" formControlName="loanAmount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.loanAmount')?.touched && leadForm.get('customInformation.loanAmount')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('customInformation.loanAmount')?.errors?.['required']">Loan Amount is
+                            required.</div>
+                        <div *ngIf="leadForm.get('customInformation.loanAmount')?.errors?.['pattern']">Please enter a
+                            valid amount.</div>
+                    </div>
+                </div>
+                <!-- Deductions -->
+                <div>
+                    <label for="deductions" class="block mb-2 font-medium text-gray-500">Potongan</label>
+                    <input id="deductions" type="text" formControlName="deductions"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.deductions')?.touched && leadForm.get('customInformation.deductions')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('customInformation.deductions')?.errors?.['required']">Deductions are
+                            required.</div>
+                        <div *ngIf="leadForm.get('customInformation.deductions')?.errors?.['pattern']">Please enter a
+                            valid amount.</div>
+                    </div>
+                </div>
+                <!-- Tracking Info -->
+                <div>
+                    <label for="trackingInfo" class="block mb-2 font-medium text-gray-500">Pos Tracking No/ Email/
+                        Fax</label>
+                    <input id="trackingInfo" type="text" formControlName="trackingInfo"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.trackingInfo')?.touched && leadForm.get('customInformation.trackingInfo')?.invalid"
+                        class="text-red-600 text-sm">
+                        Tracking Info is required.
+                    </div>
+                </div>
+                <!-- Net Salary -->
+                <div>
+                    <label for="netSalary" class="block mb-2 font-medium text-gray-500">Gaji Bresih</label>
+                    <input id="netSalary" type="text" formControlName="netSalary"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('customInformation.netSalary')?.touched && leadForm.get('customInformation.netSalary')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('customInformation.netSalary')?.errors?.['required']">Net Salary is
+                            required.</div>
+                        <div *ngIf="leadForm.get('customInformation.netSalary')?.errors?.['pattern']">Please enter a
+                            valid amount.</div>
+                    </div>
+                </div>
+                <!-- Payslip Year -->
+                <div>
+                    <label for="payslipYear" class="block mb-2 font-medium text-gray-500">Payslip Year</label>
+                    <select id="payslipYear" formControlName="payslipYear" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('customInformation.payslipYear')?.touched && leadForm.get('customInformation.payslipYear')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payslip Year is required.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="bottom-0 left-0 w-full bg-white p-4 shadow-md">
+            <div class="flex justify-end gap-4">
+                <button type="button" (click)="onCancel()" class="btn-secondary">CANCEL</button>
+                <button type="submit" class="btn-primary">{{ isEditMode ? 'UPDATE' : 'SAVE' }}</button>
+            </div>
+        </div>
+    </form>
+</div>

@@ -1,0 +1,456 @@
+<div class="form-container relative p-6">
+    <h2 class="text-5xl mb-5">{{ isEditMode ? 'Update' : 'New' }}Account</h2>
+    <form [formGroup]="accountForm" (ngSubmit)="onSubmit()" class="space-y-5">
+
+        <!-- Basic Information Section -->
+        <fieldset class="border p-6 rounded-lg">
+            <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+            <!-- Owner -->
+            <div class="mb-5">
+                <label for="owner" class="block mb-2 font-medium text-gray-500">Owner</label>
+                <input id="owner" type="text" formControlName="owner"
+                    class="border py-2 px-3 w-full rounded-md bg-gray-200" readonly>
+                    <div *ngIf="accountForm.get('owner')?.touched && accountForm.get('owner')?.invalid"
+                    class="text-red-600 text-sm">
+                    Owner is required.
+                </div>
+            </div>
+            
+            <div formGroupName="basicInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Account Name -->
+                <div>
+                    <label for="accountName" class="block mb-2 font-medium text-gray-500">Account Name</label>
+                    <input id="accountName" type="text" formControlName="accountName"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.accountName')?.touched && (accountForm.get('basicInformation.accountName')?.dirty || opportunityForm.get('basicInformation.accountName')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.accountName')?.errors?.['required']">Account Name is required.</small>
+                        <small *ngIf="accountForm.get('basicInformation.accountName')?.errors?.['minlength']">Account Name must be at least 3 characters long.</small>
+                    </div>
+                </div>
+
+                <!-- Phone -->
+                <div>
+                    <label for="account" class="block mb-2 font-medium text-gray-500">Phone</label>
+                    <input id="account" type="text" formControlName="phone"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.phone')?.touched && (accountForm.get('basicInformation.phone')?.dirty || accountForm.get('basicInformation.phone')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.phone')?.errors?.['required']">Phone is required.</small>
+                    </div>
+                </div>
+
+                <!-- Fax -->
+                <div>
+                    <label for="fax" class="block mb-2 font-medium text-gray-500">Fax</label>
+                    <select id="fax" formControlName="fax" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let category of formSettings['fax']" [value]="category">{{fax}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('basicInformation.fax')?.touched && (accountForm.get('basicInformation.fax')?.dirty || accountForm.get('basicInformation.fax')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.fax')?.errors?.['required']">Fax is required.</small>
+                    </div>
+                </div>
+
+               <!-- Account Type -->
+               <div>
+                <label for="accountType" class="block mb-2 font-medium text-gray-500">Account Type</label>
+                <select id="accountType" formControlName="accountType" class="border py-2 px-3 w-full rounded-md">
+                    <option *ngFor="let status of formSettings['accountType']" [value]="status">{{status}}</option>
+                </select>
+                <div *ngIf="accountForm.get('basicInformation.accountType')?.touched && accountForm.get('basicInformation.accountType')?.invalid"
+                    class="text-red-600 text-sm">
+                    Account Type is required.
+                </div>
+            </div>
+
+                <!-- Website -->
+                <div>
+                    <label for="website" class="block mb-2 font-medium text-gray-500">Website</label>
+                    <input id="website" type="text" formControlName="website"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.website')?.touched && (accountForm.get('basicInformation.website')?.dirty ||accountForm.get('basicInformation.website')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.website')?.errors?.['required']">Website is required.</small>
+                        <small *ngIf="accountForm.get('basicInformation.website')?.errors?.['pattern']">Please enter a valid Website.</small>
+                    </div>
+                </div>
+
+                <!-- Parent Account -->
+                <div>
+                    <label for="parentAccount" class="block mb-2 font-medium text-gray-500">Parent Account</label>
+                    <input id="parentAccount" type="date" formControlName="parentAccount"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.parentAccount')?.touched && (accountForm.get('basicInformation.parentAccount')?.dirty || accountForm.get('basicInformation.parentAccount')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.parentAccount')?.errors?.['required']">Close Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Email-->
+                <div>
+                    <label for="email" class="block mb-2 font-medium text-gray-500">Email</label>
+                    <input id="email" type="text" formControlName="email"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.email')?.touched && (accountForm.get('basicInformation.email')?.dirty ||accountForm.get('basicInformation.email')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.email')?.errors?.['required']">Email is required.</small>
+                        <small *ngIf="accountForm.get('basicInformation.email')?.errors?.['pattern']">Please enter a valid Email.</small>
+                    </div>
+                </div>
+
+                <!-- Transaction -->
+                <div>
+                    <label for="transaction" class="block mb-2 font-medium text-gray-500">With Transaction</label>
+                    <input id="transaction" type="text" formControlName="transaction"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.transaction')?.touched && (accountForm.get('basicInformation.transaction')?.dirty ||accountForm.get('basicInformation.transaction')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.transaction')?.errors?.['required']">Transaction is required.</small>
+                        <small *ngIf="accountForm.get('basicInformation.transaction')?.errors?.['pattern']">Please enter a valid transaction</small>
+                    </div>
+                </div>
+
+                <!-- Rating -->
+                <div>
+                    <label for="rating" class="block mb-2 font-medium text-gray-500">Rating</label>
+                    <input id="rating" type="date" formControlName="rating"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.rating')?.touched && (accountForm.get('basicInformation.rating')?.dirty || accountForm.get('basicInformation.rating')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.rating')?.errors?.['required']">Submit Date is required.</small>
+                    </div>
+                </div>
+
+                <!-- Payment Term -->
+                <div>
+                    <label for="" class="block mb-2 font-medium text-gray-500">Payment Term</label>
+                    <select id="paymentTerm" formControlName="paymentTerm" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let status of formSettings['paymentTerm']" [value]="status">{{status}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('basicInformation.paymentTerm')?.touched && accountForm.get('basicInformation.paymentTerm')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payment Term is required.
+                    </div>
+                </div>
+
+
+                <!-- Contact Number -->
+                <div>
+                    <label for="contactNumber" class="block mb-2 font-medium text-gray-500">No Telephone
+                        Dihubungi</label>
+                    <input id="contactNumber" type="text" formControlName="contactNumber"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.contactNumber')?.touched && accountForm.get('basicInformation.contactNumber')?.invalid"
+                        class="text-red-600 text-sm">
+                        Contact Number is required.
+                    </div>
+                </div>
+
+                
+
+                <!-- NRIC -->
+                <div>
+                    <label for="nric" class="block mb-2 font-medium text-gray-500">NRIC</label>
+                    <input id="nric" type="text" formControlName="nric"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.nric')?.touched && (accountForm.get('basicInformation.nric')?.dirty || accountForm.get('basicInformation.nric')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.nric')?.errors?.['required']">NRIC is required.</small>
+                        <small *ngIf="opportunityForm.get('basicInformation.nric')?.errors?.['pattern']">NRIC must be 12 digits.</small>
+                    </div>
+                </div>
+
+                <!-- Pos Out Follow Up Status -->
+                <div>
+                    <label for="followUp" type="date" formControlName="followUp"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('basicInformation.followUp')?.touched && (accountForm.get('basicInformation.followUp')?.dirty || accountForm.get('basicInformation.followUp')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.followUp')?.errors?.['required']">Pos Out Follow Up is required.</small>
+                    </div>
+                </div>
+
+                <!-- Telesales Remarks -->
+                <div>
+                    <label for="telesalesRemarks" class="block mb-2 font-medium text-gray-500">Telesales Remarks </label>
+                    <select id="telesalesRemarks" formControlName="telesalesRemarks" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['telesalesRemarks']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('basicInformation.telesalesRemarks')?.touched && (accountForm.get('basicInformation.telesalesRemarks')?.dirty || accountForm.get('basicInformation.telesalesRemarks')?.touched)"
+                         class="text-red-600">
+                        <small *ngIf="accountForm.get('basicInformation.telesalesRemarks')?.errors?.['required']">Company Type is required.</small>
+                    </div>
+                </div>
+
+                
+        </fieldset>
+
+        <!-- Billing Address Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Billing  Address</legend>
+            <div formGroupName="additionalInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Country -->
+                <div>
+                    <label for="country" class="block mb-2 font-medium text-gray-500">Country</label>
+                    <select id="country" formControlName="country" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.country')?.touched && leadForm.get('additionalInformation.country')?.invalid"
+                        class="text-red-600 text-sm">
+                        Country is required.
+                    </div>
+                </div>
+                <!-- State -->
+                <div>
+                    <label for="state" class="block mb-2 font-medium text-gray-500">State/Province</label>
+                    <select id="state" formControlName="state" class="border py-2 px-3 w-full rounded-md">
+                        <option value="">--Please Select--</option>
+                        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.state')?.touched && leadForm.get('additionalInformation.state')?.invalid"
+                        class="text-red-600 text-sm">
+                        State/Province is required.
+                    </div>
+                </div>
+                <!-- City -->
+                <div>
+                    <label for="city" class="block mb-2 font-medium text-gray-500">City</label>
+                    <select id="city" formControlName="city" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('additionalInformation.city')?.touched && leadForm.get('additionalInformation.city')?.invalid"
+                        class="text-red-600 text-sm">
+                        City is required.
+                    </div>
+                </div>
+                <!-- Zip/Postal Code -->
+                <div>
+                    <label for="zip" class="block mb-2 font-medium text-gray-500">Zip/Postal Code</label>
+                    <input id="zip" type="text" formControlName="zip" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="leadForm.get('additionalInformation.zip')?.touched && leadForm.get('additionalInformation.zip')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="leadForm.get('additionalInformation.zip')?.errors?.['required']">Zip/Postal Code is
+                            required.</div>
+                        <div *ngIf="leadForm.get('additionalInformation.zip')?.errors?.['pattern']">Please enter a valid
+                            5-digit postal code.</div>
+                    </div>
+                </div>
+                <!-- Street -->
+                <div class="md:col-span-2 lg:col-span-3">
+                    <label for="street" class="block mb-2 font-medium text-gray-500">Street</label>
+                    <textarea id="street" formControlName="street"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="accountForm.get('billingAdddress.street')?.touched && accountForm.get('billingAdddress.street')?.invalid"
+                        class="text-red-600 text-sm">
+                        Street is required.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
+
+        <!-- Shipping Address Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Shipping  Address</legend>
+            <div formGroupName="shippingAddress" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Country -->
+                <div>
+                    <label for="country" class="block mb-2 font-medium text-gray-500">Country</label>
+                    <select id="country" formControlName="country" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let country of countries" [value]="country">{{country}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('shippingAddress.country')?.touched && accountForm.get('shippingAddress.country')?.invalid"
+                        class="text-red-600 text-sm">
+                        Country is required.
+                    </div>
+                </div>
+                <!-- State -->
+                <div>
+                    <label for="state" class="block mb-2 font-medium text-gray-500">State/Province</label>
+                    <select id="state" formControlName="state" class="border py-2 px-3 w-full rounded-md">
+                        <option value="">--Please Select--</option>
+                        <option *ngFor="let state of states" [value]="state">{{state}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('shippingAddress.state')?.touched && accountForm.get('shippingAddress.state')?.invalid"
+                        class="text-red-600 text-sm">
+                        State/Province is required.
+                    </div>
+                </div>
+                <!-- City -->
+                <div>
+                    <label for="city" class="block mb-2 font-medium text-gray-500">City</label>
+                    <select id="city" formControlName="city" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let city of cities" [value]="city">{{city}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('shippingAddress.city')?.touched && leadForm.get('shippingAddress.city')?.invalid"
+                        class="text-red-600 text-sm">
+                        City is required.
+                    </div>
+                </div>
+                <!-- Zip/Postal Code -->
+                <div>
+                    <label for="zip" class="block mb-2 font-medium text-gray-500">Zip/Postal Code</label>
+                    <input id="zip" type="text" formControlName="zip" class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('shippingAddress.zip')?.touched && accountForm.get('shippingAddress.zip')?.invalid"
+                        class="text-red-600 text-sm">
+                        <div *ngIf="accountForm.get('shippingAddress.zip')?.errors?.['required']">Zip/Postal Code is
+                            required.</div>
+                        <div *ngIf="accountForm.get('shippingAddress.zip')?.errors?.['pattern']">Please enter a valid
+                            5-digit postal code.</div>
+                    </div>
+                </div>
+                <!-- Street -->
+                <div class="md:col-span-2 lg:col-span-3">
+                    <label for="street" class="block mb-2 font-medium text-gray-500">Street</label>
+                    <textarea id="street" formControlName="street"
+                        class="border py-2 px-3 w-full rounded-md"></textarea>
+                    <div *ngIf="accountForm.get('shippingAddress.street')?.touched && accountForm.get('shippingAddress.street')?.invalid"
+                        class="text-red-600 text-sm">
+                        Street is required.
+                    </div>
+                </div>
+            </div>
+        </fieldset>
+
+
+        <!-- Description Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14">
+            <legend class="text-3xl px-0 inline-block w-auto">Description Information</legend>
+            <div formGroupName="descriptionInformation">
+                <label for="description" class="block mb-2 font-medium text-gray-500">Category</label>
+                <textarea id="description" formControlName="description"
+                    class="border py-2 px-3 w-full rounded-md"></textarea>
+                <div *ngIf="accountForm.get('descriptionInformation.description')?.touched && (accountForm.get('descriptionInformation.description')?.dirty || accountForm.get('descriptionInformation.description')?.touched)"
+                     class="text-red-600">
+                    <small *ngIf="accountForm.get('descriptionInformation.description')?.errors?.['required']">Description is required.</small>
+                    <small *ngIf="accountForm.get('descriptionInformation.description')?.errors?.['minlength']">Description must be at least 10 characters long.</small>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Custome Information Section -->
+        <fieldset class="border p-6 rounded-lg mt-14 mb-10">
+            <legend class="text-3xl px-0 inline-block w-auto">Custome Information</legend>
+            <div formGroupName="customInformation" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+                <!-- Type Of Loan -->
+                <div>
+                    <label for="typeOfLoan" class="block mb-2 font-medium text-gray-500">Type Of Loan</label>
+                    <select id="typeOfLoan" formControlName="typeOfLoan" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let type of formSettings['typeOfLoan']" [value]="type">{{type}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('customInformation.typeOfLoan')?.touched && accountForm.get('customInformation.typeOfLoan')?.invalid"
+                        class="text-red-600 text-sm">
+                        Type Of Loan is required.
+                    </div>
+                </div>
+                <!-- Payslip Month -->
+                <div>
+                    <label for="payslipMonth" class="block mb-2 font-medium text-gray-500">Payslip Month</label>
+                    <select id="payslipMonth" formControlName="payslipMonth" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let month of months" [value]="month">{{month}}</option>
+                    </select>
+                    <div *ngIf="accountForm.get('customInformation.payslipMonth')?.touched && accountForm.get('customInformation.payslipMonth')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payslip Month is required.
+                    </div>
+                </div>
+                <!-- Pos Out Date -->
+                <div>
+                    <label for="posOutDate" class="block mb-2 font-medium text-gray-500">Pos Out Date</label>
+                    <input id="posOutDate" type="date" formControlName="posOutDate"
+                        class="border py-2 px-3 w-full rounded-md">
+                    <div *ngIf="accountForm.get('customInformation.posOutDate')?.touched && accountForm.get('customInformation.posOutDate')?.invalid"
+                        class="text-red-600 text-sm">
+                        Pos Out Date is required.
+                    </div>
+                </div>
+               
+               <!-- Loan Amount -->
+               <div>
+                <label for="loadAccount" class="block mb-2 font-medium text-gray-500">Pos Out Load Accont</label>
+                <input id="loadAccount" type="text" formControlName="loadAccount"
+                    class="border py-2 px-3 w-full rounded-md">
+                <div *ngIf="accountForm.get('customInformation.loadAccount')?.touched && accountForm.get('customInformation.loadAccount')?.invalid"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="accountForm.get('customInformation.loadAccount')?.errors?.['required']">Load account is
+                        required.</div>
+                    <div *ngIf="accountForm.get('customInformation.loadAccount')?.errors?.['pattern']">Please enter a
+                        valid accunt.</div>
+                </div>
+            </div>
+               <!--Gross Salary-->
+               <div>
+                <label for="grossSalary" class="block mb-2 font-medium text-gray-500">Gaji Kasar</label>
+                <input id="grossSalary" type="text" formControlName="grossSalary"
+                    class="border py-2 px-3 w-full rounded-md">
+                <div *ngIf="accountForm.get('customInformation.grossSalary')?.touched && accountForm.get('customInformation.grossSalary')?.invalid"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="accountForm.get('customInformation.grossSalary')?.errors?.['required']">Gross Salary is
+                        required.</div>
+                    <div *ngIf="accountForm.get('customInformation.grossSalary')?.errors?.['pattern']">Please enter a
+                        valid amount.</div>
+                </div>
+            </div>
+            <!-- Tracking Info -->
+            <div>
+                <label for="trackingInfo" class="block mb-2 font-medium text-gray-500">Pos Tracking No/ Email/
+                    Fax</label>
+                <input id="trackingInfo" type="text" formControlName="trackingInfo"
+                    class="border py-2 px-3 w-full rounded-md">
+                <div *ngIf="accountForm.get('customInformation.trackingInfo')?.touched && accountForm.get('customInformation.trackingInfo')?.invalid"
+                    class="text-red-600 text-sm">
+                    Tracking Info is required.
+                </div>
+            </div>
+            <!-- Deductions -->
+            <div>
+                <label for="deductions" class="block mb-2 font-medium text-gray-500">Potongan</label>
+                <input id="deductions" type="text" formControlName="deductions"
+                    class="border py-2 px-3 w-full rounded-md">
+                <div *ngIf="accountForm.get('customInformation.deductions')?.touched && accountForm.get('customInformation.deductions')?.invalid"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="accountForm.get('customInformation.deductions')?.errors?.['required']">Deductions are
+                        required.</div>
+                    <div *ngIf="accountForm.get('customInformation.deductions')?.errors?.['pattern']">Please enter a
+                        valid amount.</div>
+                </div>
+            </div>
+             <!-- Payslip Type -->
+                <div>
+                    <label for="payslipType" class="block mb-2 font-medium text-gray-500">payslipType</label>
+                    <select id="payslipType" formControlName="payslipType" class="border py-2 px-3 w-full rounded-md">
+                        <option *ngFor="let year of years" [value]="year">{{year}}</option>
+                    </select>
+                    <div *ngIf="leadForm.get('customInformation.payslipType')?.touched && leadForm.get('customInformation.payslipType')?.invalid"
+                        class="text-red-600 text-sm">
+                        Payslip Type is required.
+                    </div>
+                </div>
+            </div>
+            <!-- Deductions -->
+            <div>
+                <label for="netSalary" class="block mb-2 font-medium text-gray-500">Gaji Bersih</label>
+                <input id="netSalary" type="text" formControlName="netSalary"
+                    class="border py-2 px-3 w-full rounded-md">
+                <div *ngIf="accountForm.get('customInformation.netSalary')?.touched && accountForm.get('customInformation.netSalary')?.invalid"
+                    class="text-red-600 text-sm">
+                    <div *ngIf="accountForm.get('customInformation.netSalary')?.errors?.['required']">net salary are
+                        required.</div>
+                    <div *ngIf="accountForm.get('customInformation.netSalary')?.errors?.['pattern']">Please enter a
+                        valid salary.</div>
+                </div>
+            </div>
+        </fieldset>
+
+        <!-- Submit and Cancel Buttons -->
+        <div class="bottom-0 left-0 w-full bg-white p-4 shadow-md">
+            <div class="flex justify-end gap-4">
+                <button type="button" (click)="onCancel()" class="btn-secondary">CANCEL</button>
+                <button type="submit" class="btn-primary">{{ isEditMode ? 'UPDATE' : 'SAVE' }}</button>
+            </div>
+        </div>
+    </form>
+</div>
+

@@ -1,0 +1,23 @@
+{
+    "Malaysia": {
+      "states": {
+        "Johor": ["Johor Bahru", "Muar", "Batu Pahat", "Kluang", "Pontian"],
+        "Kedah": ["Alor Setar", "Sungai Petani", "Kulim", "Jitra", "Langkawi"],
+        "Kelantan": ["Kota Bharu", "Kuala Krai", "Gua Musang", "Tumpat", "Pasir Mas"],
+        "Kuala Lumpur": ["Kuala Lumpur"],
+        "Labuan": ["Labuan"],
+        "Malacca": ["Malacca City", "Ayer Keroh", "Alor Gajah", "Jasin"],
+        "Negeri Sembilan": ["Seremban", "Port Dickson", "Nilai", "Tampin", "Jempol"],
+        "Pahang": ["Kuantan", "Bentong", "Temerloh", "Pekan", "Raub"],
+        "Penang": ["George Town", "Butterworth", "Bayan Lepas", "Balik Pulau", "Bukit Mertajam"],
+        "Perak": ["Ipoh", "Taiping", "Sitiawan", "Teluk Intan", "Batu Gajah"],
+        "Perlis": ["Kangar", "Arau", "Padang Besar"],
+        "Putrajaya": ["Putrajaya"],
+        "Sabah": ["Kota Kinabalu", "Sandakan", "Tawau", "Lahad Datu", "Keningau"],
+        "Sarawak": ["Kuching", "Miri", "Sibu", "Bintulu", "Limbang"],
+        "Selangor": ["Shah Alam", "Petaling Jaya", "Subang Jaya", "Klang", "Ampang Jaya"],
+        "Terengganu": ["Kuala Terengganu", "Kerteh", "Dungun", "Chukai", "Marang"]
+      }
+    }
+  }
+  

@@ -1,0 +1,251 @@
+<div class="form-container relative lead-details-container">
+    <h2 class="text-5xl mb-5">Opportunity Details</h2>
+    <div class="flex justify-end gap-4 mb-4">
+        <button (click)="onEditClick()" class="btn-primary-sm flex gap-2">
+            <i class="bi bi-pencil"></i> Edit
+        </button>
+        <button (click)="onPrintClick()" class="btn-secondary-sm">
+            <i class="bi bi-printer"></i> Print
+        </button>
+        <button (click)="onCloneClick()" class="btn-secondary-sm">
+            <i class="bi bi-copy"></i> Clone
+        </button>
+        <button (click)="onDeleteClick()" class="btn-secondary-danger-sm">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+        <a [routerLink]="['/portal/leads/list']" class="btn-secondary-sm"><i class="bi bi-x-lg"></i> Close</a>
+    </div>
+
+    <!-- Basic Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50">
+        <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Owner:</div>
+                <div class="w-[70%]">
+                    {{ opportunity?.owner }}
+                    <a href="#" class="text-blue-600">Changes <i class="bi bi-pencil-fill"></i></a>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Opportunity Name:</div>
+                    <div class="w-[70%]">{{ opportunity?.basicInformation?.opportunityName }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Account:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.account }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Category:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.category }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Contact:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.contact }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Account(RM):</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.account}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Close Date:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.closeDate | date:'yyyy-MM-dd'}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Stage:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.stage }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Probability:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.probability }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Submit Date(Internal):</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.submitDateInternal| date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Submission Amount:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.submissionAmount }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Submission Date(HQ):</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.submissionDateHQ | date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Disbursement Amount:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.disbursementAmount }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Disbursement Date(HQ):</div>
+                    <div class="w-[70%]">{{ opportunity?.basicInformation?.disbursementDateHQ }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Company Type:</div>
+                    <div class="w-[70%]">{{ opportunity?.basicInformation?.companyType }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Pos Back Date:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.posBackDate| date:'yyyy-MM-dd'}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Date Application Cancelled:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.dateApplicationCancelled| date:'yyyy-MM-dd'}}
+                    </div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Approval Date:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.approvalDate| date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Admin Remarks:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.adminRemarks }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="md:col-span-2 lg:col-span-3 flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Comm Rcvd Date:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.commRcvdDate | date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">NRIC:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.nric }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Comm Pay Date:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.commPayDate| date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Type of Loan:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.typeOfLoan}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Chewque No:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.chewqueNo}}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Finance Remarks:</div>
+                    <div class="w-[70%]">{{opportunity?.basicInformation?.financeRemarks }}</div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- Additional Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Additional Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Lead Source:</div>
+                    <div class="w-[70%]">{{opportunity?.additionalInformation?.leadSource }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Next Step:</div>
+                    <div class="w-[70%]">{{opportunity?.additionalInformation?.nextStep}}</div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- Description Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Description Information</legend>
+        <div class="font-medium">Description:</div>
+        <div>{{opportunity?.descriptionInformation?.description }}</div>
+    </fieldset>
+
+    <!-- Custom Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Custom Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Out Date:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.posOutDate | date:'yyyy-MM-dd'}}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Payslip Type:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.payslipType }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Out Loan Amount:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.posOutLoanAmount}}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">No Telephone Dihubungi:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.contactNumber}}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Tracking No/ Email/ Fax:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.posTrackingInfo}}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Inquiry Date:</div>
+                <div class="w-[70%]">{{opportunity?.customInformation?.inquiryDate}}</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="border rounded-lg mt-7">
+        <div class="bg-gray-200 p-3 px-7 flex justify-between items-center">
+            <h4 class="text-2xl "><i class="bi bi-stickies"></i> STAGE HISTORY</h4>
+        </div>
+        <div class="p-5 px-6">
+            <div class="text-center"> There is no record to display!</div>
+        </div>
+    </div>
+    <div class="border rounded-lg mt-7">
+        <div class="bg-gray-200 p-3 px-7 flex justify-between items-center">
+            <h4 class="text-2xl "><i class="bi bi-chat-left-text"></i> Ownership History</h4>
+        </div>
+        <div class="p-5 px-6">
+            <div class="text-center"> There is no record to display!</div>
+        </div>
+    </div>
+</div>

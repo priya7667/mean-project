@@ -1,0 +1,14 @@
+.active {
+    background-color: white;
+    color: var(--erp-primary);
+}
+
+.normal {
+    color: white;
+    transition: color 0.3s, background-color 0.3s;
+}
+
+.normal:hover {
+    background-color: white;
+    color: var(--erp-primary);
+}

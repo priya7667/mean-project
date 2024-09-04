@@ -1,0 +1,61 @@
+{
+  "DropDownSettings": {
+    "setting_key": "Drop Down Setting",
+    "modules": {
+      "Leads": {
+        "forms": {
+          "Lead-Form": {
+            "fields": {
+              "leadStatus": "Lead Status",
+              "attitude": "Attitude",
+              "leadSource": "Lead Source",
+              "industry": "Industry",
+              "payslipType": "Payslip Type",
+              "followUp": "Follow-up",
+              "typeOfLoan": "Type of Loan"
+            }
+          }
+        }
+      },
+      "Accounts": {
+        "forms": {
+          "Account Form": {
+            "fields": {
+              "accountType": "Account Type",
+              "accountStatus": "Account Status"
+            }
+          }
+        }
+      },
+      "Opportunities": {
+        "forms": {
+          "Opportunity Form": {
+            "fields": {
+              "category": "Category",
+              "stage": "Stage",
+              "companyType": "Company Type",
+              "typeOfLoan": "Type of Loan",
+              "leadSource": "Lead Source",
+              "payslipType": "Payslip Type"
+            }
+          }
+        }
+      }
+    }
+  },
+  "RangeSettings": {
+    "setting_key": "Range Setting",
+    "modules": {
+      "HR": {
+        "forms": {
+          "Salary Form": {
+            "fields": {
+              "minSalary": "Minimum Salary",
+              "maxSalary": "Maximum Salary"
+            }
+          }
+        }
+      }
+    }
+  }
+}

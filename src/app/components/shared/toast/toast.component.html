@@ -1,0 +1,6 @@
+<div *ngIf="showToast" [ngClass]="toastClass" class="fixed top-5 right-5 z-50 px-6 py-4 rounded-md shadow-lg">
+    <button (click)="closeToast()" class="absolute top-0 right-0 mt-1 mr-2 text-white">
+      &times;
+    </button>
+    {{ toastMessage }}
+  </div>

@@ -1,0 +1,342 @@
+<!-- Change Owner Modal -->
+<div *ngIf="isChangeOwnerModalOpen" class="fixed z-10 inset-0 overflow-y-auto">
+    <div class="flex items-center justify-center min-h-screen px-4">
+        <div class="fixed inset-0 bg-gray-500 opacity-75"></div>
+        <div class="bg-white rounded-lg overflow-hidden shadow-xl transform transition-all sm:max-w-lg sm:w-full">
+            <div class="p-6">
+                <h3 class="text-lg leading-6 font-medium text-gray-900 mb-4">Change Lead Owner</h3>
+
+                <div class="relative w-full">
+                    <input type="text" [(ngModel)]="searchTerm" (focus)="isDropdownOpen = true"
+                        (input)="onSearchChange()" placeholder="Search and select owner"
+                        class="w-full p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500" />
+
+                    <div *ngIf="isDropdownOpen && filteredUsers.length > 0"
+                        class="absolute z-10 w-full bg-white border border-gray-300 rounded-md shadow-lg mt-1 max-h-40 overflow-y-auto">
+                        <ul>
+                            <li *ngFor="let user of filteredUsers" (click)="selectUser(user)"
+                                class="cursor-pointer px-4 py-2 hover:bg-indigo-600 hover:text-white">
+                                {{ user.name }}
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="mt-4 flex justify-end">
+                    <button (click)="isChangeOwnerModalOpen = false"
+                        class="btn-secondary mr-3 px-4 py-2 text-sm font-medium text-gray-700 bg-gray-100 rounded-md hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Cancel
+                    </button>
+                    <button (click)="onChangeOwnerConfirm()"
+                        class="btn-primary px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">
+                        Change Owner
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div class="form-container relative lead-details-container">
+    <h2 class="text-5xl mb-5">Lead Details</h2>
+    <div class="flex justify-end gap-4 mb-4">
+        <button (click)="onEditClick()" class="btn-primary-sm flex gap-2">
+            <i class="bi bi-pencil"></i> Edit
+        </button>
+        <button (click)="onPrintClick()" class="btn-secondary-sm">
+            <i class="bi bi-printer"></i> Print
+        </button>
+        <button (click)="onCloneClick()" class="btn-secondary-sm">
+            <i class="bi bi-copy"></i> Clone
+        </button>
+        <button (click)="onDeleteClick()" class="btn-secondary-danger-sm">
+            <i class="bi bi-trash"></i> Delete
+        </button>
+        <a [routerLink]="['/portal/leads/list']" class="btn-secondary-sm"><i class="bi bi-x-lg"></i> Close</a>
+    </div>
+
+
+    <!-- Basic Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50">
+        <legend class="text-3xl px-0 inline-block w-auto">Basic Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Owner:</div>
+                <div class="w-[70%]">
+                    {{ getOwnerName(lead) }}
+                    <a class="text-blue-600 cursor-pointer" (click)="onChangeOwnerClick()">Change Owner <i
+                            class="bi bi-pencil-fill"></i></a>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Last Name:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.lastName }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Leads Status:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.leadStatus }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">First Name:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.firstName }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Attitude:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.attitude }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Job Title:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.jobTitle }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Lead Source:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.leadSource }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Company Name:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.companyName }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Industry:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.industry }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Mobile No:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.mobileNo }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Date of Birth:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.dateOfBirth | date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Second Mobile No:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.secondMobileNo }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Work Phone No:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.workPhoneNo }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Email:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.email }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Work FAX:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.workFax }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Second Email:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.secondEmail }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Website:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.website }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">NRIC:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.nric }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Reason - Tidak Berminat:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.reason }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="md:col-span-2 lg:col-span-3 flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Telesales Remarks:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.telesalesRemarks }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Payslip Type:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.payslipType }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Berapa Kali Follow Up?</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.followUp }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">No Telephone Dihubungi:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.contactNumber }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Inquiry Date:</div>
+                    <div class="w-[70%]">{{ lead?.basicInformation?.inquiryDate | date:'yyyy-MM-dd' }}</div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+
+    <!-- Additional Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Additional Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Country:</div>
+                    <div class="w-[70%]">{{ lead?.additionalInformation?.country }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">State/Province:</div>
+                    <div class="w-[70%]">{{ lead?.additionalInformation?.state }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">City:</div>
+                    <div class="w-[70%]">{{ lead?.additionalInformation?.city }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Zip/Postal Code:</div>
+                    <div class="w-[70%]">{{ lead?.additionalInformation?.zip }}</div>
+                </div>
+            </div>
+            <div>
+                <div class="md:col-span-2 lg:col-span-3 flex gap-3">
+                    <div class="font-medium w-[30%] text-right">Street:</div>
+                    <div class="w-[70%]">{{ lead?.additionalInformation?.street }}</div>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+
+    <!-- Description Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Description Information</legend>
+        <div class="font-medium">Description:</div>
+        <div>{{ lead?.descriptionInformation?.description }}</div>
+    </fieldset>
+
+    <!-- Custom Information Section -->
+    <fieldset class="border p-6 rounded-lg bg-gray-50 mt-6">
+        <legend class="text-3xl px-0 inline-block w-auto">Custom Information</legend>
+        <div class="grid grid-cols-2 gap-5">
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Type Of Loan:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.typeOfLoan }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Payslip Month:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.payslipMonth }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Out Date:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.posOutDate | date:'yyyy-MM-dd' }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Gaji Kasar:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.grossSalary }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Out Loan Amount:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.loanAmount }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Potongan:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.deductions }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Pos Tracking No/ Email/ Fax:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.trackingInfo }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Gaji Bresih:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.netSalary }}</div>
+            </div>
+            <div class="flex gap-3">
+                <div class="font-medium w-[30%] text-right">Payslip Year:</div>
+                <div class="w-[70%]">{{ lead?.customInformation?.payslipYear }}</div>
+            </div>
+        </div>
+    </fieldset>
+
+    <div class="border rounded-lg mt-7">
+        <div class="bg-gray-200 p-3 px-7 flex justify-between items-center">
+            <h4 class="text-2xl "><i class="bi bi-stickies"></i> STAGE HISTORY</h4>
+        </div>
+        <div class="p-5 px-6">
+            <div class="text-center"> There is no record to display!</div>
+        </div>
+    </div>
+    <!-- Ownership History Section -->
+    <div class="border rounded-lg mt-7">
+        <div class="bg-gray-200 p-3 px-7 flex justify-between items-center">
+            <h4 class="text-2xl"><i class="bi bi-chat-left-text"></i> Ownership History</h4>
+        </div>
+        <div class="p-5 px-6">
+            <ul *ngIf="lead && lead.ownerHistory && lead.ownerHistory.length > 0; else noHistory">
+                <li *ngFor="let history of lead.ownerHistory" class="border-b py-2">
+                    <div>
+                        <strong>Previous Owner:</strong> {{ history?.previousOwner?.name || 'Unknown' }}
+                    </div>
+                    <div>
+                        <strong>New Owner:</strong> {{ history?.newOwner?.name || 'Unknown' }}
+                    </div>
+                    <div>
+                        <strong>Changed By:</strong> {{ history?.changedBy?.name || 'Unknown' }}
+                    </div>
+                    <div>
+                        <strong>Date:</strong> {{ history.changeDate | date:'medium' }}
+                    </div>
+                </li>
+            </ul>
+            <ng-template #noHistory>
+                <div class="text-center">There is no record to display!</div>
+            </ng-template>
+        </div>
+    </div>
+
+
+
+
+</div>
